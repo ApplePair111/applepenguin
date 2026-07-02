@@ -11,3 +11,7 @@ Available for Linux only!! You also need a computer that's capable of **avx2**!!
 # Run
 
 First run `python setup.py` and use `executable` script. Modify path/to/dir with the ApplePenguin directory. You can run `executable` to run the UCI engine.
+
+## IMPORTANT: READ BEFORE CLONING REPO!
+
+You need to have Git LFS installed to be able to use Stockfish. 
