@@ -6,3 +6,4 @@ A chess engine that uses a hybrid system of both AI and games from TWIC to find 
 
 Usable with *UCI*!!
 
+Available for Linux only!! You also need a computer that's capable of **avx2**!!

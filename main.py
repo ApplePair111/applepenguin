@@ -1,28 +1,28 @@
 from uci_wrapper import UCIEngine
-import sys
-import chess.pgn
-import chess.polyglot
+import pickle
+import chess
 import chess.engine
-import glob
+from decidemove import decide_move
+from pathlib import Path
 
-pattern_db = {}   # zobrist_hash -> { move_uci: count }
 
-for filename in glob.glob("chessgames/game*.pgn"):
-    with open(filename) as f:
-        while True:
-            game = chess.pgn.read_game(f)
-            if game is None:
-                break
 
-            board = game.board()
-            for move in game.mainline_moves():
-                key = chess.polyglot.zobrist_hash(board)   # hash of position BEFORE the move
-                move_str = move.uci()
+STOCKFISH_PATH = Path(__file__).resolve().parent / "stockfish-bin" / "stockfish"   # check with: which stockfish
 
-                if key not in pattern_db:
-                    pattern_db[key] = {}
-                pattern_db[key][move_str] = pattern_db[key].get(move_str, 0) + 1
+# load your pattern DB
+with open("pattern_db.pkl", "rb") as f:
+    pattern_db = pickle.load(f)
 
-                board.push(move)   # now advance
+# start Stockfish
+engine = chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH) # type: ignore
 
-print(pattern_db)
+uciengine = UCIEngine("ApplePenguin", "ApplePair111", decide_move, None, (pattern_db, engine), None)
+uciengine.run()
+
+# a board to test on — starting position
+#board = chess.Board()
+
+#move = decide_move(board, pattern_db, engine)
+#print("Chosen move:", move.uci())
+
+engine.quit()

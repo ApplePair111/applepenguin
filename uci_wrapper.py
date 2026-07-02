@@ -7,10 +7,10 @@ and this handles all the stdin/stdout/UCI plumbing around it.
 
 import sys
 import chess
-
+import typing as tpg
 
 class UCIEngine:
-    def __init__(self, name: str, author: str, decide_move_fn, on_new_game=None):
+    def __init__(self, name: str, author: str, decide_move_fn: tpg.Callable, on_new_game: tpg.Callable | None = None, decide_move_fn_args: tuple | None = None, on_new_game_fn_args: tuple | None = None):
         """
         name, author        -> shown to the GUI via 'id name' / 'id author'
         decide_move_fn       -> callable(board: chess.Board) -> chess.Move
@@ -20,6 +20,8 @@ class UCIEngine:
         self.author = author
         self.decide_move_fn = decide_move_fn
         self.on_new_game = on_new_game
+        self.decide_move_fn_args = decide_move_fn_args
+        self.on_new_game_args = on_new_game_fn_args
         self.board = chess.Board()
 
     def run(self):
@@ -39,7 +41,7 @@ class UCIEngine:
             elif line == "ucinewgame":
                 self.board.reset()
                 if self.on_new_game:
-                    self.on_new_game()
+                    self.on_new_game(*self.on_new_game_fn_args) #type: ignore
             elif line.startswith("position"):
                 self._handle_position(line)
             elif line.startswith("go"):
@@ -81,5 +83,5 @@ class UCIEngine:
         # parse go params if you want time management later, e.g.:
         # tokens = line.split()
         # if "movetime" in tokens: ...
-        move = self.decide_move_fn(self.board)
+        move = self.decide_move_fn(self.board, *self.decide_move_fn_args) #type: ignore
         self._send(f"bestmove {move.uci()}")
