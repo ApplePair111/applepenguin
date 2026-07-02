@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-exec python /path/to/applepenguin/main.py
