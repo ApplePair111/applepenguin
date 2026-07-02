@@ -1,0 +1,17 @@
+# ApplePenguin
+
+A chess engine that uses a hybrid system of both AI and games from TWIC to find the best moves to play.
+
+**If penguins eat fish, ApplePenguin eats Stockfish** (and uses it to it's advantage)
+
+Usable with *UCI*!!
+
+Available for Linux only!! You also need a computer that's capable of **avx2**!!
+
+# Run
+
+First run `python setup.py` and use `executable` script. Modify path/to/dir with the ApplePenguin directory. You can run `executable` to run the UCI engine.
+
+## IMPORTANT: READ BEFORE CLONING REPO!
+
+You need to have Git LFS installed to be able to use Stockfish. 
