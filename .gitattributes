@@ -1,3 +1,1 @@
-stockfish-bin.zip filter=lfs diff=lfs merge=lfs -text
-stockfish-bin/* filter=lfs diff=lfs merge=lfs -text
 * !text !filter !merge !diff
