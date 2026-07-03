@@ -25,8 +25,8 @@ subprocess.run("mv Stockfish-sf_18.zip ../Stockfish-bin.zip", cwd = pathlib.Path
 subprocess.run("unzip Stockfish-bin.zip", shell = True, cwd = pathlib.Path(__file__).resolve().parent)
 
 
-subprocess.run("mv Stockfish-sf_18 stockfish-bin.zip", shell = True, cwd = pathlib.Path(__file__).resolve().parent)
+subprocess.run("mv Stockfish-sf_18/src stockfish-bin", shell = True, cwd = pathlib.Path(__file__).resolve().parent)
 
 subprocess.run("pip install python-chess", shell=True)
 
-print("Done!")
+print("\n\nDone!")
